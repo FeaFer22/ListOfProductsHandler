@@ -1,17 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ListOfProductsHandler.Context
+namespace ListOfProductsHandler.Models
 {
     public class Product
     {
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
         [Required]
         [Display(Name = "Название")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
+
         [Required]
         [Display(Name = "Описание")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
         [Required]
         [Display(Name = "Цена")]
         public ushort Price { get; set; }
