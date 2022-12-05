@@ -63,6 +63,9 @@ namespace ListOfProductsHandler.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
             return View(product);
         }
 
