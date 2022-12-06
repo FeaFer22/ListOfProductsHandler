@@ -1,12 +1,10 @@
 ﻿@model ListOfProductsHandler.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить продукт";
 }
 
-<h1>Create</h1>
-
-<h4>Product</h4>
+<h1>Добавление продукта</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,7 +33,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {

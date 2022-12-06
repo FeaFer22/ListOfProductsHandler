@@ -8,12 +8,10 @@ namespace ListOfProductsHandler.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext appDbContext;
 
         public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext)
         {
             _logger = logger;
-            this.appDbContext = appDbContext;
         }
 
         public IActionResult Index()
