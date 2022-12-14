@@ -13,13 +13,15 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.ActionLink(
+                    @Html.DisplayNameFor(model => model.Name), "Index", new { sortOrder = ViewBag.NameSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Description)    
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.ActionLink(
+                    @Html.DisplayNameFor(model => model.Price), "Index", new { sortOrder = ViewBag.PriceSort})
             </th>
             <th></th>
         </tr>

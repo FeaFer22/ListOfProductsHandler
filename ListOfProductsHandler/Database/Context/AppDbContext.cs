@@ -16,11 +16,5 @@ namespace ListOfProductsHandler.Database.Context
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Product> Products { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            
-        }
-
     }
 }

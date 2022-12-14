@@ -20,9 +20,30 @@ namespace ListOfProductsHandler.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortOrder)
         {
-              return View(await _context.Products.ToListAsync());
+            var products = _context.Products.AsQueryable();
+
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["PriceSort"] = sortOrder == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
+
+            switch (sortOrder)
+            {
+                case SortState.NameDesc:
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case SortState.PriceDesc:
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case SortState.PriceAsc:
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name);
+                    break;
+            }
+
+            return View(products.ToList());
         }
 
         // GET: Products/Details/5
