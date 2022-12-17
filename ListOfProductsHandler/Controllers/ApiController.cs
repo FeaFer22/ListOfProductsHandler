@@ -7,6 +7,8 @@ using System.Text.Unicode;
 
 namespace ListOfProductsHandler.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class ApiController : Controller
     {
         private readonly AppDbContext _context;
