@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ListOfProductsHandler.Database.Context;
 using ListOfProductsHandler.Models;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 
 namespace ListOfProductsHandler.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
+        private IQueryable<Product> products;
 
         public ProductsController(AppDbContext context)
         {
             _context = context;
+            products = context.Products.AsQueryable();
         }
 
+        #region CRUD
         // GET: Products
         public async Task<IActionResult> Index(SortState sortOrder)
         {
-            var products = _context.Products.AsQueryable();
-
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["PriceSort"] = sortOrder == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
 
@@ -49,17 +48,8 @@ namespace ListOfProductsHandler.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
             var product = await _context.Products
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
 
             return View(product);
         }
@@ -93,16 +83,8 @@ namespace ListOfProductsHandler.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
             var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+
             return View(product);
         }
 
@@ -113,11 +95,6 @@ namespace ListOfProductsHandler.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,Price")] Product product)
         {
-            if (id != product.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -127,14 +104,7 @@ namespace ListOfProductsHandler.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -144,17 +114,8 @@ namespace ListOfProductsHandler.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
             var product = await _context.Products
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
 
             return View(product);
         }
@@ -164,10 +125,6 @@ namespace ListOfProductsHandler.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Products == null)
-            {
-                return Problem("Entity set 'AppDbContext.Product'  is null.");
-            }
             var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
@@ -178,9 +135,7 @@ namespace ListOfProductsHandler.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(Guid id)
-        {
-          return _context.Products.Any(e => e.Id == id);
-        }
+        #endregion
+
     }
 }
