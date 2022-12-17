@@ -18,13 +18,7 @@ namespace ListOfProductsHandler.Controllers
         [HttpGet]
         public JsonResult GetList()
         {
-            var jsonOptions = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                WriteIndented = true
-            };
-
-            return Json(_context.Products, jsonOptions);
+            return Json(_context.Products);
         }
     }
 }

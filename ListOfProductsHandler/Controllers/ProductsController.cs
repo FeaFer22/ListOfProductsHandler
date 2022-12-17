@@ -21,7 +21,7 @@ namespace ListOfProductsHandler.Controllers
 
         #region CRUD
         // GET: Products
-        public async Task<IActionResult> Index(SortState sortOrder)
+        public IActionResult Index(SortState sortOrder)
         {
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["PriceSort"] = sortOrder == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
