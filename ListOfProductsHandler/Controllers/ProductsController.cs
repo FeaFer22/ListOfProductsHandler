@@ -5,9 +5,11 @@ using ListOfProductsHandler.Models;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ListOfProductsHandler.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
