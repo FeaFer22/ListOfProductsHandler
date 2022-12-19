@@ -8,16 +8,19 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <title>Авторизация</title>
 </head>
-<body>
+<body style="text-align: center">
 
     <form asp-controller="Access" asp-action="Login" method="post">
-        <h1>Login</h1>
-        <input type="text" placeholder="Name" asp-for="userName"/>
-        <input type="password" placeholder="Password" asp-for="userPassword"/>
-        <button type="submit">Login</button>
-    </form>
+        <h1>Авторизация</h1>
+        <input type="text" required="required" placeholder="Логин" asp-for="userName"/> <br/><br/>
+        <input type="password" required="required" placeholder="Пароль" asp-for="userPassword"/> <br/><br/>
+        <button type="submit">Принять</button>
+    </form> <br/>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Вернуться на главную</a>
+    </div>
 
     @if (ViewData["ValidateMessage"] != null) {
         <br/>

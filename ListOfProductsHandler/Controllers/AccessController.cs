@@ -47,7 +47,7 @@ namespace ListOfProductsHandler.Controllers
                 return RedirectToAction("Index", "Products");
             }
 
-            ViewData["ValidateMessage"] = "Пользователь не найден";
+            ViewData["ValidateMessage"] = "Вход не выполнен";
             return View();
         }
     }

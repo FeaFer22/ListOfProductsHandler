@@ -2,9 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ListOfProductsHandler.Database.Context;
 using ListOfProductsHandler.Models;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ListOfProductsHandler.Controllers
