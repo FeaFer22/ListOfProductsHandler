@@ -2,13 +2,21 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace ListOfProductsHandler.Controllers
 {
     public class AccessController : Controller
     {
+        private readonly IConfiguration _configuration;
+        private readonly AuthorizationOptions _authorization;
+
+        public AccessController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _authorization = new AuthorizationOptions();
+            configuration.GetSection("AuthorizationOptions").Bind(_authorization);
+        }
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
@@ -20,17 +28,16 @@ namespace ListOfProductsHandler.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(User user)
+        public async Task<ActionResult> Login(AuthorizationOptions user)
         {
-            var filePath = Path.Combine(Environment.CurrentDirectory, "user.json");
-            var jsonDeserialized = JsonConvert.DeserializeObject<List<User>>(System.IO.File.ReadAllText(filePath));
 
-            if (user.userName.ToLower() == jsonDeserialized[0].userName
-                && user.userPassword.ToLower() == jsonDeserialized[0].userPassword)
+
+            if (user.Name.ToLower() == _authorization.Name
+                && user.Password.ToLower() == _authorization.Password)
             {
                 List<Claim> claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, user.userName),
+                    new Claim(ClaimTypes.Name, user.Name),
                     new Claim("OtherProperties", "Example Role")
                 };
 

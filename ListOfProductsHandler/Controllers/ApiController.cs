@@ -1,9 +1,5 @@
 ﻿using ListOfProductsHandler.Database.Context;
-using ListOfProductsHandler.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 
 namespace ListOfProductsHandler.Controllers
 {
